@@ -8,9 +8,10 @@ import kotlin.test.assertNull
  * Created by Kamil Rajtar on 07.12.17.  */
 internal class BoardTest {
 
-	private val startingBoard = BoardFactory().getBoard(
-			listOf( 4 to 3, 3 to 4),
-			listOf( 3 to 3, 4 to 4))
+	private val boardFactory = BoardFactory()
+	private val startingBoard = boardFactory.getBoard(
+			listOf(4 to 3, 3 to 4),
+			listOf(3 to 3, 4 to 4))
 
 
 	@BeforeEach
@@ -48,6 +49,14 @@ internal class BoardTest {
 	}
 
 	@Test
+	fun makeMove() {
+		val expected=boardFactory.getBoard(listOf(4 to 4), listOf(2 to 3, 3 to 3, 4 to 3, 3 to 4))
+		val actual=startingBoard.makeMove(Board.getCellNumber(2,3))
+		assertEquals(expected,actual,"Expected:\n"+expected.textRepresentation()+"Actual:\n"+actual.textRepresentation())
+	}
+
+
+	@Test
 	fun textRepresentation() {
 
 		val expected = " - - - - - - - - \n" +
@@ -67,8 +76,8 @@ internal class BoardTest {
 				" - - - - - - - - \n" +
 				"| | | | | | | | |\n" +
 				" - - - - - - - - \n"
-		val actual=startingBoard.textRepresentation()
-		assertEquals(expected,actual)
+		val actual = startingBoard.textRepresentation()
+		assertEquals(expected, actual)
 	}
 
 }
