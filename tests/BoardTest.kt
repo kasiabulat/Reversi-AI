@@ -55,6 +55,16 @@ internal class BoardTest {
 		assertEquals(expected,actual,"Expected:\n"+expected.textRepresentation()+"Actual:\n"+actual.textRepresentation())
 	}
 
+	@Test
+	fun getDominatingSite()
+	{
+		val playerMore=Board(0b111,0b1000)
+		val opponentMore=Board(0b100,0b1011)
+		val equalBoard=Board(0b111,0b111000)
+		assertEquals(Board.Site.PLAYER,playerMore.getDominatingSite())
+		assertEquals(Board.Site.OPPONENT,opponentMore.getDominatingSite())
+		assertNull(equalBoard.getDominatingSite())
+	}
 
 	@Test
 	fun textRepresentation() {

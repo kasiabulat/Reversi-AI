@@ -110,6 +110,14 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 	}
 
 
+	fun getDominatingSite(): Site? {
+		if(playerPieces.bitCount()>opponentPieces.bitCount())
+			return Site.PLAYER
+		if(playerPieces.bitCount()<opponentPieces.bitCount())
+			return Site.OPPONENT
+		return null
+	}
+
 	enum class Site {
 		PLAYER, OPPONENT
 	}
@@ -131,6 +139,16 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 		fun getCellNumber(row: Int, column: Int) = row * BOARD_SIZE + column
 		fun getCellCoordinates(cell: Int) = cell / 8 to cell % 8
 		fun isCorrectCoordinate(coordinate: Int) = coordinate in 0..7
+
+		private fun Long.bitCount(): Int {
+			var currentNumber = this
+			var result = 0
+			while (currentNumber != 0L) {
+				result += (currentNumber and 1).toInt()
+				currentNumber = currentNumber ushr 1
+			}
+			return result
+		}
 
 	}
 
