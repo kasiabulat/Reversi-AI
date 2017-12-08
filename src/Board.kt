@@ -53,9 +53,11 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 	}
 
 	fun isCorrectMove(cell: Int): Boolean {
+		val (row, column) = getCellCoordinates(cell)
+		if (!isCorrectCoordinate(row) || !isCorrectCoordinate(column))
+			return false
 		if (getSite(cell) != null)
 			return false
-		val (row, column) = getCellCoordinates(cell)
 		for (direction in DIRECTIONS) {
 			val (directionRow, directionColumn) = direction
 			val currentRow = row + directionRow
@@ -128,6 +130,8 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 	companion object {
 		private const val BOARD_SIZE = 8
+
+
 		val DIRECTIONS = listOf(
 				-1 to -1,//NW
 				-1 to 0, //N

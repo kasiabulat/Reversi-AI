@@ -6,7 +6,7 @@ class BoardFactory {
 	private fun getState(cells: Collection<Pair<Int, Int>>): Long {
 		var result = 0L
 		for ((row, column) in cells)
-			result = result or  (1L shl Board.getCellNumber(row, column))
+			result = result or (1L shl Board.getCellNumber(row, column))
 		return result
 	}
 
@@ -15,8 +15,14 @@ class BoardFactory {
 		val opponentPieces = getState(opponentCollection)
 
 		val result = Board(playerPieces, opponentPieces)
-		if(!result.checkIfCorrect())
+		if (!result.checkIfCorrect())
 			throw RuntimeException("Cannot create board. Pieces are overlapping.")
 		return result
+	}
+
+	fun getStartingBoard(): Board {
+		return getBoard(
+				listOf(4 to 3, 3 to 4),
+				listOf(3 to 3, 4 to 4))
 	}
 }
