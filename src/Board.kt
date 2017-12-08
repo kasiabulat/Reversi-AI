@@ -99,7 +99,7 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 				val toAppend = when (site) {
 					Site.PLAYER -> 'X'
 					Site.OPPONENT -> 'O'
-					null -> ' '
+					null -> if (isCorrectMove(cell)) '.' else ' '
 				}
 				result.append(toAppend)
 			}
