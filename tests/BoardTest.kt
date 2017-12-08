@@ -50,42 +50,42 @@ internal class BoardTest {
 
 	@Test
 	fun makeMove() {
-		val expected=boardFactory.getBoard(listOf(4 to 4), listOf(2 to 3, 3 to 3, 4 to 3, 3 to 4))
-		val actual=startingBoard.makeMove(Board.getCellNumber(2,3))
-		assertEquals(expected,actual,"Expected:\n"+expected.textRepresentation()+"Actual:\n"+actual.textRepresentation())
+		val expected = boardFactory.getBoard(listOf(4 to 4), listOf(2 to 3, 3 to 3, 4 to 3, 3 to 4))
+		val actual = startingBoard.makeMove(Board.getCellNumber(2, 3))
+		assertEquals(expected, actual, "Expected:\n" + expected.textRepresentation() + "Actual:\n" + actual.textRepresentation())
 	}
 
 	@Test
-	fun getDominatingSite()
-	{
-		val playerMore=Board(0b111,0b1000)
-		val opponentMore=Board(0b100,0b1011)
-		val equalBoard=Board(0b111,0b111000)
-		assertEquals(Board.Site.PLAYER,playerMore.getDominatingSite())
-		assertEquals(Board.Site.OPPONENT,opponentMore.getDominatingSite())
+	fun getDominatingSite() {
+		val playerMore = Board(0b111, 0b1000)
+		val opponentMore = Board(0b100, 0b1011)
+		val equalBoard = Board(0b111, 0b111000)
+		assertEquals(Board.Site.PLAYER, playerMore.getDominatingSite())
+		assertEquals(Board.Site.OPPONENT, opponentMore.getDominatingSite())
 		assertNull(equalBoard.getDominatingSite())
 	}
 
 	@Test
 	fun textRepresentation() {
 
-		val expected = " - - - - - - - - \n" +
-				"| | | | | | | | |\n" +
-				" - - - - - - - - \n" +
-				"| | | | | | | | |\n" +
-				" - - - - - - - - \n" +
-				"| | | |.| | | | |\n" +
-				" - - - - - - - - \n" +
-				"| | |.|O|X| | | |\n" +
-				" - - - - - - - - \n" +
-				"| | | |X|O|.| | |\n" +
-				" - - - - - - - - \n" +
-				"| | | | |.| | | |\n" +
-				" - - - - - - - - \n" +
-				"| | | | | | | | |\n" +
-				" - - - - - - - - \n" +
-				"| | | | | | | | |\n" +
-				" - - - - - - - - \n"
+		val expected = " 1 2 3 4 5 6 7 8 \n" +
+				"  - - - - - - - - \n" +
+				"1| | | | | | | | |\n" +
+				"  - - - - - - - - \n" +
+				"2| | | | | | | | |\n" +
+				"  - - - - - - - - \n" +
+				"3| | | |.| | | | |\n" +
+				"  - - - - - - - - \n" +
+				"4| | |.|O|X| | | |\n" +
+				"  - - - - - - - - \n" +
+				"5| | | |X|O|.| | |\n" +
+				"  - - - - - - - - \n" +
+				"6| | | | |.| | | |\n" +
+				"  - - - - - - - - \n" +
+				"7| | | | | | | | |\n" +
+				"  - - - - - - - - \n" +
+				"8| | | | | | | | |\n" +
+				"  - - - - - - - - \n"
 		val actual = startingBoard.textRepresentation()
 		assertEquals(expected, actual)
 	}

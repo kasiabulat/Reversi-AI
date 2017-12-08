@@ -89,10 +89,13 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 	fun textRepresentation(): String {
 		if (!checkIfCorrect())
 			throw RuntimeException("Board incorrect.")
-		val rowSeparator = " - - - - - - - - \n"
-		val result = StringBuilder(rowSeparator)
+		val rowSeparator = "  - - - - - - - - \n"
+		val result = StringBuilder(" 1 2 3 4 5 6 7 8 \n")
+		result.append(rowSeparator)
 		for (i in 0..7) {
+			result.append(i + 1)
 			for (j in 0..7) {
+
 				result.append('|')
 				val cell = getCellNumber(i, j)
 				val site = getSite(cell)
@@ -111,9 +114,9 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 
 	fun getDominatingSite(): Site? {
-		if(playerPieces.bitCount()>opponentPieces.bitCount())
+		if (playerPieces.bitCount() > opponentPieces.bitCount())
 			return Site.PLAYER
-		if(playerPieces.bitCount()<opponentPieces.bitCount())
+		if (playerPieces.bitCount() < opponentPieces.bitCount())
 			return Site.OPPONENT
 		return null
 	}
