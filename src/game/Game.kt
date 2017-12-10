@@ -22,7 +22,7 @@ class Game(private val black: Player, private val white: Player, private val boa
 		while (!board.isGameEnded()) {
 			output.println("Now is turn of: ${currentPlayer.name}")
 			if (!board.canPlayerPutPiece()) {
-				board.passTurn()
+				board=board.passTurn()
 			} else {
 				val move = currentPlayer.makeMove(board)
 				if (!board.isCorrectMove(move)) {
