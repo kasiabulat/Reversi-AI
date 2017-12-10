@@ -1,9 +1,10 @@
+import board.Board
+import board.BoardException
+import board.BoardFactory
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
+import kotlin.test.*
 
 /**
  * Created by Kamil Rajtar on 07.12.17.  */
@@ -43,14 +44,22 @@ internal class BoardTest {
 		for (i in 0..7)
 			for (j in 0..7) {
 				val cell = Board.getCellNumber(i, j)
-				assertEquals(correctMoves.contains(i to j), startingBoard.isCorrectMove(cell),"At ($i,$j)")
+				assertEquals(correctMoves.contains(i to j), startingBoard.isCorrectMove(cell), "At ($i,$j)")
 			}
 
 		for (i in listOf(-1, 8))//Moves not in board
 			for (j in listOf(-1, 8)) {
 				val cell = Board.getCellNumber(i, j)
-				assertFalse(startingBoard.isCorrectMove(cell),"Not in board fail ($i,$j)")
+				assertFalse(startingBoard.isCorrectMove(cell), "Not in board fail ($i,$j)")
 			}
+	}
+
+	@Test
+	fun canPlayerPutPiece() {
+		val startingBoard = boardFactory.getStartingBoard()
+		assertTrue { startingBoard.canPlayerPutPiece() }
+		val completedBoard = Board(0b111, 0)
+		assertFalse { completedBoard.canPlayerPutPiece() }
 	}
 
 	@Test
@@ -58,6 +67,21 @@ internal class BoardTest {
 		val expected = boardFactory.getBoard(listOf(4 to 4), listOf(2 to 3, 3 to 3, 4 to 3, 3 to 4))
 		val actual = startingBoard.makeMove(Board.getCellNumber(2, 3))
 		assertEquals(expected, actual, "Expected:\n" + expected.textRepresentation() + "Actual:\n" + actual.textRepresentation())
+	}
+
+	@Test
+	fun passTurn() {
+		val completedBoard = Board(0b111, 0b0)
+		val expected = Board(0b0, 0b111)
+		val actual = completedBoard.passTurn()
+		assertEquals(expected, actual)
+	}
+
+	@Test
+	fun passTurnFail() {
+		assertFailsWith(BoardException::class) {
+			startingBoard.passTurn()
+		}
 	}
 
 	@Test
@@ -92,6 +116,20 @@ internal class BoardTest {
 				"  - - - - - - - - \n"
 		val actual = startingBoard.textRepresentation()
 		assertEquals(expected, actual)
+	}
+
+	@Test()
+	fun testIncorrectBoard() {
+		assertFailsWith(BoardException::class) {
+			Board(0b010, 0b011)
+		}
+	}
+
+	@Test
+	fun testIsGameEnded() {
+		assertFalse(startingBoard.isGameEnded())
+		val endedGame = Board(0b000, 0b111)
+		assertTrue(endedGame.isGameEnded())
 	}
 
 }

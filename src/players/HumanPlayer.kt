@@ -1,3 +1,6 @@
+package players
+
+import board.Board
 import java.io.PrintWriter
 import java.util.*
 

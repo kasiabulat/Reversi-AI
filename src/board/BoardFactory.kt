@@ -1,3 +1,5 @@
+package board
+
 /**
  * Created by Kamil Rajtar on 07.12.17.
  */
@@ -15,7 +17,7 @@ class BoardFactory {
 		val opponentPieces = getState(opponentCollection)
 
 		val result = Board(playerPieces, opponentPieces)
-		if (!result.checkIfCorrect())
+		if (!result.isCorrectBoard())
 			throw RuntimeException("Cannot create board. Pieces are overlapping.")
 		return result
 	}

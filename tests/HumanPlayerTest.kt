@@ -1,4 +1,7 @@
+import board.Board
+import board.BoardFactory
 import org.junit.jupiter.api.Test
+import players.HumanPlayer
 import java.io.ByteArrayInputStream
 import java.io.FileOutputStream
 import java.io.PrintWriter

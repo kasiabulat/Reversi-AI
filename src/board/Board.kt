@@ -1,21 +1,42 @@
+package board
+
 /**
  * Created by Kamil Rajtar on 07.12.17.
  */
 data class Board(private val playerPieces: Long, private val opponentPieces: Long) {
 
+	init {
+		if (!isCorrectBoard())
+			throw BoardException("Board in inconsistent state")
+	}
 
 	private infix fun Long.nthBit(n: Int) = ((this ushr n) and 1L).toInt()
 
-	fun checkIfCorrect() = (playerPieces and opponentPieces) == 0L
+	fun isCorrectBoard() = (playerPieces and opponentPieces) == 0L
 
 	fun getSite(cell: Int): Site? {
-		if (playerPieces nthBit cell == 1)
+		val playerBit = playerPieces nthBit cell
+		val opponentBit = opponentPieces nthBit cell
+		if (playerBit == 1)
 			return Site.PLAYER
-		if (opponentPieces nthBit cell == 1)
+		if (opponentBit == 1)
 			return Site.OPPONENT
 		return null
 	}
 
+	fun passTurn(): Board {
+		if (canPlayerPutPiece())
+			throw BoardException("Cannot pass. Player can make move.")
+		return Board(opponentPieces, playerPieces)
+	}
+
+	fun isGameEnded(): Boolean {
+		if (canPlayerPutPiece())
+			return false
+		if (passTurn().canPlayerPutPiece())
+			return false
+		return true
+	}
 
 	fun makeMove(cell: Int): Board {
 		val (row, column) = getCellCoordinates(cell)
@@ -87,10 +108,12 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 		return getSite(currentCell) == Site.PLAYER
 	}
 
+	fun canPlayerPutPiece(): Boolean {
+		return (0..63).any { isCorrectMove(it) }
+	}
+
 
 	fun textRepresentation(): String {
-		if (!checkIfCorrect())
-			throw RuntimeException("Board incorrect.")
 		val rowSeparator = "  - - - - - - - - \n"
 		val result = StringBuilder(" 1 2 3 4 5 6 7 8 \n")
 		result.append(rowSeparator)
