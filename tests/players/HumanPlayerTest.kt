@@ -1,7 +1,8 @@
+package players
+
 import board.Board
 import board.BoardFactory
 import org.junit.jupiter.api.Test
-import players.HumanPlayer
 import java.io.ByteArrayInputStream
 import java.io.FileOutputStream
 import java.io.PrintWriter
@@ -23,7 +24,7 @@ internal class HumanPlayerTest {
 		val outputStream = FileOutputStream("/dev/null")
 		val scanner = Scanner(inputStream)
 		val printWriter = PrintWriter(outputStream)
-		val player = HumanPlayer(scanner, printWriter)
+		val player = HumanPlayer("TESTED",scanner, printWriter)
 
 		val expected = Board.getCellNumber(2, 3)
 		val actual = player.makeMove(startingBoard)

@@ -1,6 +1,5 @@
-import board.Board
-import board.BoardException
-import board.BoardFactory
+package board
+
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -96,7 +95,7 @@ internal class BoardTest {
 
 	@Test
 	fun textRepresentation() {
-		val expected = " 1 2 3 4 5 6 7 8 \n" +
+		val expected = "  1 2 3 4 5 6 7 8 \n" +
 				"  - - - - - - - - \n" +
 				"1| | | | | | | | |\n" +
 				"  - - - - - - - - \n" +

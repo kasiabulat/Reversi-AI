@@ -113,9 +113,9 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 	}
 
 
-	fun textRepresentation(): String {
+	fun textRepresentation(playerSign:Char='X',opponentSign:Char='O'): String {
 		val rowSeparator = "  - - - - - - - - \n"
-		val result = StringBuilder(" 1 2 3 4 5 6 7 8 \n")
+		val result = StringBuilder("  1 2 3 4 5 6 7 8 \n")
 		result.append(rowSeparator)
 		for (i in 0..7) {
 			result.append(i + 1)
@@ -125,8 +125,8 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 				val cell = getCellNumber(i, j)
 				val site = getSite(cell)
 				val toAppend = when (site) {
-					Site.PLAYER -> 'X'
-					Site.OPPONENT -> 'O'
+					Site.PLAYER -> playerSign
+					Site.OPPONENT -> opponentSign
 					null -> if (isCorrectMove(cell)) '.' else ' '
 				}
 				result.append(toAppend)
