@@ -40,7 +40,7 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 	fun makeMove(cell: Int): Board {
 		val (row, column) = getCellCoordinates(cell)
-		var flipFlag = 0L
+		var flipMask = 0L
 		for (direction in DIRECTIONS) {
 			val (directionRow, directionColumn) = direction
 			val currentRow = row + directionRow
@@ -51,15 +51,15 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 			if (getSite(currentCell) != Site.OPPONENT)
 				continue
 			if (isPlayersPieceOnTheEnd(currentCell, direction)) {
-				flipFlag = flipFlag or getFlipFlag(currentCell, direction)
+				flipMask = flipMask or getFlipMask(currentCell, direction)
 			}
 		}
-		val newPlayerPieces = opponentPieces xor flipFlag
-		val newOpponentPieces = (playerPieces xor flipFlag) or (1L shl cell)
+		val newPlayerPieces = opponentPieces xor flipMask
+		val newOpponentPieces = (playerPieces xor flipMask) or (1L shl cell)
 		return Board(newPlayerPieces, newOpponentPieces)
 	}
 
-	private fun getFlipFlag(cell: Int, direction: Pair<Int, Int>): Long {
+	private fun getFlipMask(cell: Int, direction: Pair<Int, Int>): Long {
 		var result = 0L
 		var currentCell = cell
 		val (directionRow, directionColumn) = direction
