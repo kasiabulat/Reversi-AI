@@ -18,7 +18,7 @@ class BoardFactory {
 
 		val result = Board(playerPieces, opponentPieces)
 		if (!result.isCorrectBoard())
-			throw RuntimeException("Cannot create board. Pieces are overlapping.")
+			throw RuntimeException("Cannot create tilePane. Pieces are overlapping.")
 		return result
 	}
 

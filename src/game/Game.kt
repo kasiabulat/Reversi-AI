@@ -17,7 +17,7 @@ class Game(private val black: Player, private val white: Player, private val boa
 		output.println("Black : ${black.name}.")
 		output.println("White : ${white.name}.")
 		var currentPlayer = black
-		output.println("Current state of board:")
+		output.println("Current state of tilePane:")
 		board.print(currentPlayer)
 		while (!board.isGameEnded()) {
 			output.println("Now is turn of: ${currentPlayer.name}")
@@ -31,7 +31,7 @@ class Game(private val black: Player, private val white: Player, private val boa
 				board = board.makeMove(move)
 			}
 			currentPlayer = currentPlayer.nextPlayer()
-			output.println("Current state of board:")
+			output.println("Current state of tilePane:")
 			board.print(currentPlayer)
 		}
 		val resultText = when (board.getDominatingSite()) {
