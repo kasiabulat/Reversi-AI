@@ -31,7 +31,7 @@ public class MainWindowController {
     private void addCell(int rowId, int columnId) {
         int cell_id = rowId * BOARD_SIZE + columnId;
         if(board.isCorrectMove(cell_id))
-            board.makeMove(cell_id);
+            board = board.makeMove(cell_id);
         displayBoard();
     }
 
