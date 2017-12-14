@@ -46,10 +46,10 @@ internal class BoardTest {
 				assertEquals(correctMoves.contains(i to j), startingBoard.isCorrectMove(cell), "At ($i,$j)")
 			}
 
-		for (i in listOf(-1, 8))//Moves not in board
+		for (i in listOf(-1, 8))//Moves not in tilePane
 			for (j in listOf(-1, 8)) {
 				val cell = Board.getCellNumber(i, j)
-				assertFalse(startingBoard.isCorrectMove(cell), "Not in board fail ($i,$j)")
+				assertFalse(startingBoard.isCorrectMove(cell), "Not in tilePane fail ($i,$j)")
 			}
 	}
 

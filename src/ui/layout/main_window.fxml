@@ -11,7 +11,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.MainWindowController">
    <children>
-      <TilePane fx:id="board" prefColumns="8" prefRows="8" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="20.0" />
+      <TilePane fx:id="tilePane" prefColumns="8" prefRows="8" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="20.0" />
       <Label layoutX="400.0" layoutY="35.0" text="Current player: " />
       <Label fx:id="currentPlayer" layoutX="400.0" layoutY="55.0" text="BLACK">
          <font>
