@@ -13,7 +13,7 @@
    <children>
       <TilePane fx:id="tilePane" prefColumns="8" prefRows="8" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="20.0" />
       <Label layoutX="400.0" layoutY="35.0" text="Current player: " />
-      <Label fx:id="currentPlayer" layoutX="400.0" layoutY="55.0" text="BLACK">
+      <Label fx:id="currentPlayerLabel" layoutX="400.0" layoutY="55.0" text="BLACK">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

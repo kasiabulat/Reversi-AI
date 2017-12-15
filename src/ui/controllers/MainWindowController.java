@@ -22,11 +22,22 @@ public class MainWindowController {
     @FXML
     protected Label blackScore;
     @FXML
-    protected Label currentPlayer;
+    protected Label currentPlayerLabel;
 
     private Board board;
 
     public static int BOARD_SIZE = 8;
+    private Player player1;
+    private Player player2;
+
+    private MainWindowController() {
+        super();
+    }
+    public MainWindowController(Player player1, Player player2) {
+        this();
+        this.player1 = player1;
+        this.player2 = player2;
+    }
 
     private void addCell(int rowId, int columnId) {
         int cell_id = rowId * BOARD_SIZE + columnId;
