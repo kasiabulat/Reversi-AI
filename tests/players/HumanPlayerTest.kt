@@ -24,11 +24,11 @@ internal class HumanPlayerTest {
 		val outputStream = FileOutputStream("/dev/null")
 		val scanner = Scanner(inputStream)
 		val printWriter = PrintWriter(outputStream)
-		val player = HumanPlayer("TESTED",scanner, printWriter)
+		val player = HumanPlayer("TESTED", scanner, printWriter)
 
 		val expected = Board.getCellNumber(2, 3)
-		val actual = player.makeMove(startingBoard)
+		player.makeMove(startingBoard, { actual -> assertEquals(expected, actual) })
 
-		assertEquals(expected, actual)
+
 	}
 }

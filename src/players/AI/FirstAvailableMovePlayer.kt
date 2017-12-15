@@ -7,11 +7,13 @@ import players.Player
  * Created by Kamil Rajtar on 10.12.17.
  */
 class FirstAvailableMovePlayer(override val name: String) :Player {
-	override fun makeMove(board: Board): Int {
+	override fun makeMove(board: Board, onMoveDecided: (Int) -> Unit) {
 		for(move in 0..63)
 		{
-			if(board.isCorrectMove(move))
-				return move
+			if(board.isCorrectMove(move)) {
+				onMoveDecided(move)
+				return
+			}
 		}
 		throw RuntimeException("Cannot make move")
 	}

@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 
 /**
  * Created by Kasia on 05.12.2016.

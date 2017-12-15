@@ -21,7 +21,7 @@ internal class GameTest {
 
 	@Test
 	fun playGame() {
-		val output= PrintWriter("/dev/null")
+		val output= PrintWriter(System.out)
 		val black= FirstAvailableMovePlayer("Test 1")
 		val white= FirstAvailableMovePlayer("Test 2")
 		val boardFactory= BoardFactory()

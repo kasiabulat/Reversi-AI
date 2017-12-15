@@ -16,8 +16,9 @@ internal class FirstAvailableMovePlayerTest {
 	fun makeMove() {
 		val player=FirstAvailableMovePlayer("Test 1")
 		val expected = Board.getCellNumber(2, 3)
-		val actual = player.makeMove(startingBoard)
+		player.makeMove(startingBoard,{actual ->
+			assertEquals(expected, actual)
+		})
 
-		assertEquals(expected, actual)
 	}
 }

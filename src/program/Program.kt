@@ -1,10 +1,6 @@
 package program
 
-import board.BoardFactory
-import game.Game
-import players.HumanPlayer
-import java.io.PrintWriter
-import java.util.*
+import asynchronous
 
 /**
  * Created by Kamil Rajtar on 10.12.17.
@@ -16,7 +12,9 @@ class Program {
 		val input=Scanner(System.`in`)
 		val output=PrintWriter(System.out,true)
 		val black=HumanPlayer("Player 1",input,output)
-		val white=HumanPlayer("Player 2",input,output)
+		val white= HumanPlayer("Player 2",input,output)
+//		val black=FirstAvailableMovePlayer("Player 1")
+//		val white=FirstAvailableMovePlayer("Player 2")
 		val boardFactory=BoardFactory()
 		Game(black,white,boardFactory,output).playGame()
 	}

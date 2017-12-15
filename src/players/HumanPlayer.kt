@@ -18,20 +18,22 @@ class HumanPlayer(override val name: String, private val input: Scanner, private
 		return userNumber - 1
 	}
 
-	override fun makeMove(board: Board): Int {
+	override fun makeMove(board: Board, onMoveDecided: (Int) -> Unit) {
 		try {
 			val row = readCoordinate("Row: ")
 			val column = readCoordinate("Column: ")
 			val cell = Board.getCellNumber(row, column)
 			if (!board.isCorrectMove(cell)) {
 				output.println("ERROR! Cannot make this move")
-				return makeMove(board)
+				makeMove(board, onMoveDecided)
+				return
 			}
-			return cell
-
+			onMoveDecided(cell)
+			return
 		} catch (e: NumberFormatException) {
 			output.println("ERROR! Bad number format")
-			return makeMove(board)
+			makeMove(board, onMoveDecided)
+			return
 		}
 	}
 }
