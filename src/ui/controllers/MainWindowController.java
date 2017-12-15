@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
 import players.Player;
 import ui.components.Cell;
 
@@ -16,7 +15,7 @@ public class MainWindowController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    protected TilePane tilePane;
+    private TilePane tilePane;
     @FXML
     protected Label whiteScore;
     @FXML
@@ -26,35 +25,50 @@ public class MainWindowController {
 
     private Board board;
 
-    public static int BOARD_SIZE = 8;
-    private Player player1;
-    private Player player2;
+    private static int BOARD_SIZE = 8;
+    private Player black;
+    private Player white;
+    private Player currentPlayer;
 
     private MainWindowController() {
         super();
     }
-    public MainWindowController(Player player1, Player player2) {
+    public MainWindowController(Player black, Player white) {
         this();
-        this.player1 = player1;
-        this.player2 = player2;
+        this.black = black;
+        this.white = white;
+        this.currentPlayer = black;
     }
 
     private void addCell(int rowId, int columnId) {
         int cell_id = rowId * BOARD_SIZE + columnId;
         if(board.isCorrectMove(cell_id))
             board = board.makeMove(cell_id);
+
+        currentPlayer = nextPlayer();
+        //whiteScore.setText(board.getWhiteScore());
+        //blackScore.setText(board.getBlackScore());
         displayBoard();
     }
 
+    private Player nextPlayer() {
+        currentPlayerLabel.setText(currentPlayer.getName());
+        return currentPlayer.equals(black) ? white : black;
+    }
+
+    private Site getCurrentSite() {
+        return currentPlayer.equals(black) ? Site.PLAYER : Site.OPPONENT;
+    }
+
     public void displayBoard() {
-        System.out.println("displaying board");
+       // System.out.println("displaying board");
         tilePane.getChildren().clear();
         for(int i=0;i<BOARD_SIZE;i++)
             for(int j=0;j<BOARD_SIZE;j++) {
                 Site site = board.getSite(i * BOARD_SIZE + j);
                 Cell cell;
                 if(site != null) {
-                    String color = (site.equals(Site.PLAYER)) ? "black" : "white";
+                    String color = (site.equals(getCurrentSite())) ? "black" : "white";
                     cell = new Cell(color, this::addCell,i,j);
                     cell.showDisk();
 
@@ -79,5 +93,7 @@ public class MainWindowController {
         BoardFactory boardFactory = new BoardFactory();
         board = boardFactory.getStartingBoard();
         displayBoard();
+
+        // todo: check if AI starts
     }
 }

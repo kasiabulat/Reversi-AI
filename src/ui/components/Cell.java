@@ -55,11 +55,6 @@ public class Cell extends AnchorPane implements Serializable {
 
 	public void setColor(String colorString) {
 		String styleString = "-fx-background-radius: 5em;";
-		//if(Color.BLACK.equals(color))
-		//	diskButton.setBackground(new Background(new BackgroundFill(color,new CornerRadii(5),new Insets(0))));
-			//styleString += "-fx-background-color: black;";
-		//else //styleString += "-fx-background-color: white;";
-
 		styleString += "-fx-background-color: "+colorString+";";
 		diskButton.setStyle(styleString);
 	}
