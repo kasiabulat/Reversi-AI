@@ -131,4 +131,15 @@ internal class BoardTest {
 		assertTrue(endedGame.isGameEnded())
 	}
 
+	@Test
+	fun testGetScore() {
+		val board=Board(0b11010,0b00101)
+		val actualPlayer= board.getScore(Board.Site.PLAYER)
+		val actualOpponent=board.getScore(Board.Site.OPPONENT)
+		val expectedPlayer=3
+		val expectedOpponent=2
+		assertEquals(expectedPlayer,actualPlayer)
+		assertEquals(expectedOpponent,actualOpponent)
+	}
+
 }

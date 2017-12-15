@@ -25,7 +25,7 @@ public class MainWindowController {
 
     private Board board;
 
-    private static int BOARD_SIZE = 8;
+    private static final int BOARD_SIZE = 8;
     private Player black;
     private Player white;
     private Player currentPlayer;
@@ -33,15 +33,15 @@ public class MainWindowController {
     private MainWindowController() {
         super();
     }
-    public MainWindowController(Player black, Player white) {
+    public MainWindowController(final Player black,final Player white) {
         this();
         this.black = black;
         this.white = white;
         this.currentPlayer = black;
     }
 
-    private void addCell(int rowId, int columnId) {
-        int cell_id = rowId * BOARD_SIZE + columnId;
+    private void addCell(final int rowId,final int columnId) {
+        final int cell_id = rowId * BOARD_SIZE + columnId;
         if(board.isCorrectMove(cell_id))
             board = board.makeMove(cell_id);
 
@@ -65,10 +65,10 @@ public class MainWindowController {
         tilePane.getChildren().clear();
         for(int i=0;i<BOARD_SIZE;i++)
             for(int j=0;j<BOARD_SIZE;j++) {
-                Site site = board.getSite(i * BOARD_SIZE + j);
-                Cell cell;
+                final Site site = board.getSite(i * BOARD_SIZE + j);
+                final Cell cell;
                 if(site != null) {
-                    String color = (site.equals(getCurrentSite())) ? "black" : "white";
+                    final String color = site.equals(getCurrentSite())? "black" : "white";
                     cell = new Cell(color, this::addCell,i,j);
                     cell.showDisk();
 
@@ -92,10 +92,10 @@ public class MainWindowController {
         tilePane.setMaxSize(380,380);
         tilePane.setStyle("-fx-background-color: forestgreen;");
 
-        BoardFactory boardFactory = new BoardFactory();
+        final BoardFactory boardFactory = new BoardFactory();
         board = boardFactory.getStartingBoard();
         displayBoard(-1,-1);
 
-        // todo: check if AI starts
+        // todo: check if ai starts
     }
 }

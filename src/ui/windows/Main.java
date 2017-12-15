@@ -2,13 +2,13 @@ package ui.windows;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import players.AI.FirstAvailableMovePlayer;
-import players.HumanPlayer;
 import players.HumanUIPlayer;
+import players.ai.RandomizePlayPlayer;
 import ui.controllers.MainWindowController;
+
+import java.util.Random;
 
 public class Main extends Application {
 
@@ -18,8 +18,8 @@ public class Main extends Application {
         MainWindowController mainWindowController =
                 new MainWindowController(
                         new HumanUIPlayer("Kasia"),
-                        new HumanUIPlayer("Kamil"));
-                        //new FirstAvailableMovePlayer("AI"));
+                        new RandomizePlayPlayer("Kamil",new Random()));
+                        //new FirstAvailableMovePlayer("ai"));
 
         fxmlLoader.setController(mainWindowController);
         fxmlLoader.load();
@@ -30,7 +30,12 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+
+
+
     public static void main(String[] args) {
         launch(args);
     }
 }
+
+
