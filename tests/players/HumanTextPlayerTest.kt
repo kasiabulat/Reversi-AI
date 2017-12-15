@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
 
 /**
  * Created by Kamil Rajtar on 08.12.17.  */
-internal class HumanPlayerTest {
+internal class HumanTextPlayerTest {
 
 	private val boardFactory = BoardFactory()
 	private val startingBoard = boardFactory.getStartingBoard()
@@ -24,7 +24,7 @@ internal class HumanPlayerTest {
 		val outputStream = FileOutputStream("/dev/null")
 		val scanner = Scanner(inputStream)
 		val printWriter = PrintWriter(outputStream)
-		val player = HumanPlayer("TESTED", scanner, printWriter)
+		val player = HumanTextPlayer("TESTED", scanner, printWriter)
 
 		val expected = Board.getCellNumber(2, 3)
 		player.makeMove(startingBoard, { actual -> assertEquals(expected, actual) })

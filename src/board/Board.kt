@@ -12,7 +12,7 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 	private infix fun Long.nthBit(n: Int) = ((this ushr n) and 1L).toInt()
 
-	fun isCorrectBoard() = (playerPieces and opponentPieces) == 0L
+	private fun isCorrectBoard() = (playerPieces and opponentPieces) == 0L
 
 	fun getSite(cell: Int): Site? {
 		val playerBit = playerPieces nthBit cell
@@ -144,6 +144,15 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 		if (playerPieces.bitCount() < opponentPieces.bitCount())
 			return Site.OPPONENT
 		return null
+	}
+
+	fun getScore(site: Site):Int
+	{
+		return when(site)
+		{
+			Site.PLAYER->playerPieces
+			Site.OPPONENT->opponentPieces
+		}.bitCount()
 	}
 
 	enum class Site {

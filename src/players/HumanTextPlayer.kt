@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Created by Kamil Rajtar on 08.12.17.
  */
-class HumanPlayer(override val name: String, private val input: Scanner, private val output: PrintWriter) : Player {
+class HumanTextPlayer(override val name: String, private val input: Scanner, private val output: PrintWriter) : Player {
 
 	private fun readCoordinate(name: String): Int {
 		output.print(name)

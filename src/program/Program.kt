@@ -1,9 +1,9 @@
 package program
 
-//import asynchronous
 import board.BoardFactory
 import game.Game
-import players.HumanPlayer
+import players.ai.FirstAvailableMovePlayer
+import players.ai.RandomizePlayPlayer
 import java.io.PrintWriter
 import java.util.*
 
@@ -12,23 +12,23 @@ import java.util.*
  */
 class Program {
 
-	fun run()
-	{
-		val input= Scanner(System.`in`)
-		val output= PrintWriter(System.out,true)
-		val black= HumanPlayer("Player 1",input,output)
-		val white= HumanPlayer("Player 2",input,output)
+	fun run() {
+		val output = PrintWriter(System.out, true)
+//		val input = Scanner(System.`in`)
+//		val black= HumanTextPlayer("Player 1",input,output)
+//		val white= HumanTextPlayer("Player 2",input,output)
 //		val black=FirstAvailableMovePlayer("Player 1")
 //		val white=FirstAvailableMovePlayer("Player 2")
-		val boardFactory= BoardFactory()
-		Game(black,white,boardFactory,output).playGame()
+		val black = FirstAvailableMovePlayer("Player 1")
+		val white = RandomizePlayPlayer("Player 2", Random())
+		val boardFactory = BoardFactory()
+		Game(black, white, boardFactory, output).playGame()
 	}
 
 
 }
 
-public fun main(args:Array<String>):Unit
-{
+fun main(args: Array<String>) {
 	Program().run()
 }
 

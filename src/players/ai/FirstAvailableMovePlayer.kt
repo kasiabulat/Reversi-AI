@@ -1,4 +1,4 @@
-package players.AI
+package players.ai
 
 import board.Board
 import players.Player
