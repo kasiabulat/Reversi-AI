@@ -48,7 +48,7 @@ public class MainWindowController {
         currentPlayer = nextPlayer();
         //whiteScore.setText(board.getWhiteScore());
         //blackScore.setText(board.getBlackScore());
-        displayBoard();
+        displayBoard(rowId,columnId);
     }
 
     private Player nextPlayer() {
@@ -60,7 +60,7 @@ public class MainWindowController {
         return currentPlayer.equals(black) ? Site.PLAYER : Site.OPPONENT;
     }
 
-    public void displayBoard() {
+    public void displayBoard(int addedCellRow, int addedCellColumn) {
        // System.out.println("displaying board");
         tilePane.getChildren().clear();
         for(int i=0;i<BOARD_SIZE;i++)
@@ -77,6 +77,8 @@ public class MainWindowController {
                     if(board.isCorrectMove(i * BOARD_SIZE + j))
                         cell.showDisk();
                 }
+                if(i == addedCellRow && j == addedCellColumn)
+                    cell.setText("X");
                 tilePane.getChildren().addAll(cell);
             }
     }
@@ -92,7 +94,7 @@ public class MainWindowController {
 
         BoardFactory boardFactory = new BoardFactory();
         board = boardFactory.getStartingBoard();
-        displayBoard();
+        displayBoard(-1,-1);
 
         // todo: check if AI starts
     }

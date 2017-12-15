@@ -54,9 +54,13 @@ public class Cell extends AnchorPane implements Serializable {
 	}
 
 	public void setColor(String colorString) {
-		String styleString = "-fx-background-radius: 5em;";
+		String styleString = "-fx-background-radius: 5em;" +  "-fx-text-fill: red;";
 		styleString += "-fx-background-color: "+colorString+";";
 		diskButton.setStyle(styleString);
+	}
+
+	public void setText(String text) {
+		diskButton.setText(text);
 	}
 
 	@FXML
