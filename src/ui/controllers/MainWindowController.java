@@ -23,32 +23,30 @@ public class MainWindowController {
     @FXML
     protected Label currentPlayerLabel;
 
-    private Board board;
+    //private Board board;
 
     private static final int BOARD_SIZE = 8;
     private Player black;
     private Player white;
     private Player currentPlayer;
 
-    private MainWindowController() {
-        super();
-    }
-    public MainWindowController(final Player black,final Player white) {
-        this();
+
+    public MainWindowController(final Player black, final Player white) {
         this.black = black;
         this.white = white;
         this.currentPlayer = black;
     }
 
-    private void addCell(final int rowId,final int columnId) {
+    private void onCellClick(final int rowId, final int columnId) {
         final int cell_id = rowId * BOARD_SIZE + columnId;
-        if(board.isCorrectMove(cell_id))
-            board = board.makeMove(cell_id);
-
+        //todo
+        /*if (!board.isCorrectMove(cell_id))
+            return;
+        board = board.makeMove(cell_id);
         currentPlayer = nextPlayer();
-        //whiteScore.setText(board.getWhiteScore());
-        //blackScore.setText(board.getBlackScore());
-        displayBoard(rowId,columnId);
+        blackScore.setText(String.valueOf(board.getScore(Site.PLAYER)));
+        whiteScore.setText(String.valueOf(board.getScore(Site.OPPONENT)));
+        displayBoard(rowId, columnId);*/
     }
 
     private Player nextPlayer() {
@@ -60,25 +58,22 @@ public class MainWindowController {
         return currentPlayer.equals(black) ? Site.PLAYER : Site.OPPONENT;
     }
 
-    public void displayBoard(int addedCellRow, int addedCellColumn) {
-       // System.out.println("displaying board");
+        public void displayBoard(Board board) {
         tilePane.getChildren().clear();
-        for(int i=0;i<BOARD_SIZE;i++)
-            for(int j=0;j<BOARD_SIZE;j++) {
+        for (int i = 0; i < BOARD_SIZE; i++)
+            for (int j = 0; j < BOARD_SIZE; j++) {
                 final Site site = board.getSite(i * BOARD_SIZE + j);
                 final Cell cell;
-                if(site != null) {
-                    final String color = site.equals(getCurrentSite())? "black" : "white";
-                    cell = new Cell(color, this::addCell,i,j);
+                if (site != null) {
+                    final String color = site.equals(getCurrentSite()) ? "black" : "white";
+                    cell = new Cell(color, this::onCellClick, i, j);
                     cell.showDisk();
 
                 } else {
-                    cell = new Cell("grey", this::addCell,i,j);
-                    if(board.isCorrectMove(i * BOARD_SIZE + j))
+                    cell = new Cell("grey", this::onCellClick, i, j);
+                    if (board.isCorrectMove(i * BOARD_SIZE + j))
                         cell.showDisk();
                 }
-                if(i == addedCellRow && j == addedCellColumn)
-                    cell.setText("X");
                 tilePane.getChildren().addAll(cell);
             }
     }
@@ -89,13 +84,11 @@ public class MainWindowController {
         tilePane.setPadding(new Insets(20, 20, 20, 20));
         tilePane.setPrefColumns(8);
         tilePane.setPrefRows(8);
-        tilePane.setMaxSize(380,380);
+        tilePane.setMaxSize(380, 380);
         tilePane.setStyle("-fx-background-color: forestgreen;");
 
         final BoardFactory boardFactory = new BoardFactory();
-        board = boardFactory.getStartingBoard();
-        displayBoard(-1,-1);
-
-        // todo: check if ai starts
+        Board board = boardFactory.getStartingBoard();
+        //displayBoard(board);
     }
 }

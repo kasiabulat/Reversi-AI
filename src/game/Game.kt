@@ -2,21 +2,22 @@ package game
 
 import board.Board
 import board.BoardFactory
+import game.ui.GameUI
 import players.Player
 import java.io.PrintWriter
 
 /**
  * Created by Kamil Rajtar on 10.12.17.
  */
-class Game(private val black: Player, private val white: Player, private val boardFactory: BoardFactory, private val output: PrintWriter) {
+class Game(private val black: Player, private val white: Player, private val boardFactory: BoardFactory, private val ui: GameUI) {
 
 	private fun endGame(board: Board, currentPlayer: Player) {
-		val resultText = when (board.getDominatingSite()) {
-			Board.Site.PLAYER -> "${currentPlayer.name} wins!"
-			Board.Site.OPPONENT -> "${currentPlayer.nextPlayer().name} wins!"
-			null -> "Draw!"
+		val winner = when (board.getDominatingSite()) {
+			Board.Site.PLAYER -> currentPlayer
+			Board.Site.OPPONENT -> ui.nextPlayer(currentPlayer)
+			null -> null
 		}
-		output.println(resultText)
+		ui.endGame(winner)
 	}
 
 	private fun evaluate(board: Board, player: Player) {
@@ -28,48 +29,26 @@ class Game(private val black: Player, private val white: Player, private val boa
 		var currentPlayer = player
 		if (!currentBoard.canPlayerPutPiece()) {
 			currentBoard = currentBoard.passTurn()
-			currentPlayer = currentPlayer.nextPlayer()
+			currentPlayer = ui.nextPlayer(currentPlayer)
 		}
-		output.println("Now is turn of: ${currentPlayer.name}")
+
+		ui.printCurrentPlayer(currentPlayer)
 
 		currentPlayer.makeMove(currentBoard, { move ->
 			if (!currentBoard.isCorrectMove(move)) {
 				throw GameException("Player: ${currentPlayer.name} made incorrect move: $move on ${currentBoard.textRepresentation()}")
 			}
 			currentBoard = currentBoard.makeMove(move)
-
-			output.println("Current state of board:")
-			currentBoard.print(currentPlayer)
-			evaluate(currentBoard, currentPlayer.nextPlayer())
+			ui.displayBoard(currentBoard, currentPlayer)
+			evaluate(currentBoard, ui.nextPlayer(currentPlayer))
 		})
 	}
 
 	fun playGame() {
 		val board = boardFactory.getStartingBoard()
-		output.println("Game starts.")
-		output.println("Black : ${black.name}.")
-		output.println("White : ${white.name}.")
+		ui.beginGame(black, white)
 		val currentPlayer = black
-		output.println("Current state of board:")
-		board.print(currentPlayer)
+		ui.displayBoard(board, currentPlayer)
 		evaluate(board, currentPlayer)
-	}
-
-	private fun Board.print(currentPlayer: Player) {
-		val current = currentPlayer.getSymbol()
-		val next = currentPlayer.nextPlayer().getSymbol()
-		output.println(textRepresentation(current, next))
-	}
-
-	private fun Player.getSymbol(): Char {
-		if (this == black)
-			return 'X'
-		return 'O'
-	}
-
-	private fun Player.nextPlayer(): Player {
-		if (this == black)
-			return white
-		return black
 	}
 }
