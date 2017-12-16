@@ -25,6 +25,6 @@ internal class GameTest {
 		val black= FirstAvailableMovePlayer("Test 1")
 		val white= FirstAvailableMovePlayer("Test 2")
 		val boardFactory= BoardFactory()
-		Game(black,white,boardFactory,output).playGame()
+		//Game(black,white,boardFactory,output).playGame()
 	}
 }

@@ -23,6 +23,10 @@ import players.Player;
 import players.PlayerUI;
 import ui.components.Cell;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class MainWindowController implements GameUI, PlayerUI {
     @FXML
     private AnchorPane anchorPane;
@@ -39,25 +43,30 @@ public class MainWindowController implements GameUI, PlayerUI {
     private Player black;
     private Player white;
     private Game game;
+    private ArrayList<Cell> cells;
 
-    public MainWindowController(final Player black, final Player white, final Game game) {
-        this.black = black;
-        this.white = white;
+    public void setGame(Game game) {
         this.game = game;
     }
-
-    private void onCellClick(final int rowId, final int columnId) {
-        final int cell_id = rowId * BOARD_SIZE + columnId;
-        //todo
-        /*if (!board.isCorrectMove(cell_id))
-            return;
-        board = board.makeMove(cell_id);
-        currentPlayer = nextPlayer();
-        displayBoard(rowId, columnId);*/
+    public void setPlayers(final Player black, final Player white) {
+        this.black = black;
+        this.white = white;
     }
 
     private Site getCurrentSite(Player currentPlayer) {
         return currentPlayer.equals(black) ? Site.PLAYER : Site.OPPONENT;
+    }
+
+    private void addCells() {
+        cells = new ArrayList<Cell>();
+        for (int i = 0; i < BOARD_SIZE; i++)
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                final Cell cell;
+                cell = new Cell(i, j);
+                cell.showDisk();
+                cells.add(cell);
+                tilePane.getChildren().addAll(cell);
+            }
     }
 
     @FXML
@@ -72,9 +81,8 @@ public class MainWindowController implements GameUI, PlayerUI {
         final BoardFactory boardFactory = new BoardFactory();
         Board board = boardFactory.getStartingBoard();
 
+        addCells();
         game.evaluate(board,black);
-
-        //todo: set UI for HumanUIPlayer
     }
 
     @Override
@@ -104,22 +112,17 @@ public class MainWindowController implements GameUI, PlayerUI {
 
     @Override
     public void displayBoard(@NotNull Board board, @NotNull Player currentPlayer) {
-        tilePane.getChildren().clear();
         for (int i = 0; i < BOARD_SIZE; i++)
             for (int j = 0; j < BOARD_SIZE; j++) {
                 final Site site = board.getSite(i * BOARD_SIZE + j);
-                final Cell cell;
+                final Cell cell = cells.get(i*BOARD_SIZE + j);
                 if (site != null) {
                     final String color = site.equals(getCurrentSite(currentPlayer)) ? "black" : "white";
-                    cell = new Cell(color, this::onCellClick, i, j);
+                    cell.setColor(color);
                     cell.showDisk();
-
                 } else {
-                    cell = new Cell("grey", this::onCellClick, i, j);
-                    if (board.isCorrectMove(i * BOARD_SIZE + j))
-                        cell.showDisk();
+                    cell.hideDisk();
                 }
-                tilePane.getChildren().addAll(cell);
             }
 
         blackScore.setText(String.valueOf(board.getScore(Site.PLAYER)));
@@ -137,6 +140,9 @@ public class MainWindowController implements GameUI, PlayerUI {
 
     @Override
     public void representMove(int move, @NotNull Function0<Unit> onDecided) {
-        //todo
+        Cell cell = cells.get(move);
+        cell.setColor("grey");
+        cell.setOnClick(onDecided);
+        cell.showDisk();
     }
 }

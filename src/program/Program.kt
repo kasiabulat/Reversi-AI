@@ -22,7 +22,7 @@ class Program {
 		val black = FirstAvailableMovePlayer("Player 1")
 		val white = RandomizePlayPlayer("Player 2", Random())
 		val boardFactory = BoardFactory()
-		Game(black, white, boardFactory, output).playGame()
+		//Game(black, white, boardFactory, output).playGame()
 	}
 
 

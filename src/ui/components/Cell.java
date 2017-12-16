@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,7 +21,7 @@ public class Cell extends AnchorPane implements Serializable {
 	@FXML
 	private Button diskButton;
 
-	private BiConsumer<Integer,Integer> refreshBoard;
+	private Function0<Unit> onClick;
 	private int rowId;
 	private int columnId;
 
@@ -37,16 +39,18 @@ public class Cell extends AnchorPane implements Serializable {
 							"-fx-border-width: 2px");
 		diskButton.setVisible(false);
 	}
-	public Cell(String color, BiConsumer<Integer,Integer> refreshBoard, int rowId, int columnId) {
+
+	public Cell(int rowId, int columnId) {
 		this();
-		setColor(color);
-		this.refreshBoard = refreshBoard;
 		this.rowId = rowId;
 		this.columnId = columnId;
 	}
 
 	public void showDisk() {
 		diskButton.setVisible(true);
+	}
+	public void hideDisk() {
+		diskButton.setVisible(false);
 	}
 
 	public Color getColor() {
@@ -59,13 +63,17 @@ public class Cell extends AnchorPane implements Serializable {
 		diskButton.setStyle(styleString);
 	}
 
+	public void setOnClick(Function0<Unit> onClick) {
+		this.onClick = onClick;
+	}
+
 	public void setText(String text) {
 		diskButton.setText(text);
 	}
 
 	@FXML
 	public void onCellClicked(){
-		refreshBoard.accept(rowId,columnId);
+		onClick.invoke();
 	}
 	@FXML
 	public void initialize() {}
