@@ -20,7 +20,7 @@ class Game(private val black: Player, private val white: Player, private val boa
 		ui.endGame(winner)
 	}
 
-	private fun evaluate(board: Board, player: Player) {
+	fun evaluate(board: Board, player: Player) {
 		if (board.isGameEnded()) {
 			endGame(board, player)
 			return

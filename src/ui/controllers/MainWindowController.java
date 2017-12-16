@@ -3,15 +3,27 @@ package ui.controllers;
 import board.Board;
 import board.Board.Site;
 import board.BoardFactory;
+import game.Game;
+import game.ui.GameUI;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import players.Player;
+import players.PlayerUI;
 import ui.components.Cell;
 
-public class MainWindowController {
+public class MainWindowController implements GameUI, PlayerUI {
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -23,18 +35,15 @@ public class MainWindowController {
     @FXML
     protected Label currentPlayerLabel;
 
-    //private Board board;
-
     private static final int BOARD_SIZE = 8;
     private Player black;
     private Player white;
-    private Player currentPlayer;
+    private Game game;
 
-
-    public MainWindowController(final Player black, final Player white) {
+    public MainWindowController(final Player black, final Player white, final Game game) {
         this.black = black;
         this.white = white;
-        this.currentPlayer = black;
+        this.game = game;
     }
 
     private void onCellClick(final int rowId, final int columnId) {
@@ -44,38 +53,11 @@ public class MainWindowController {
             return;
         board = board.makeMove(cell_id);
         currentPlayer = nextPlayer();
-        blackScore.setText(String.valueOf(board.getScore(Site.PLAYER)));
-        whiteScore.setText(String.valueOf(board.getScore(Site.OPPONENT)));
         displayBoard(rowId, columnId);*/
     }
 
-    private Player nextPlayer() {
-        currentPlayerLabel.setText(currentPlayer.getName());
-        return currentPlayer.equals(black) ? white : black;
-    }
-
-    private Site getCurrentSite() {
+    private Site getCurrentSite(Player currentPlayer) {
         return currentPlayer.equals(black) ? Site.PLAYER : Site.OPPONENT;
-    }
-
-        public void displayBoard(Board board) {
-        tilePane.getChildren().clear();
-        for (int i = 0; i < BOARD_SIZE; i++)
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                final Site site = board.getSite(i * BOARD_SIZE + j);
-                final Cell cell;
-                if (site != null) {
-                    final String color = site.equals(getCurrentSite()) ? "black" : "white";
-                    cell = new Cell(color, this::onCellClick, i, j);
-                    cell.showDisk();
-
-                } else {
-                    cell = new Cell("grey", this::onCellClick, i, j);
-                    if (board.isCorrectMove(i * BOARD_SIZE + j))
-                        cell.showDisk();
-                }
-                tilePane.getChildren().addAll(cell);
-            }
     }
 
     @FXML
@@ -89,6 +71,72 @@ public class MainWindowController {
 
         final BoardFactory boardFactory = new BoardFactory();
         Board board = boardFactory.getStartingBoard();
-        //displayBoard(board);
+
+        game.evaluate(board,black);
+
+        //todo: set UI for HumanUIPlayer
+    }
+
+    @Override
+    public void endGame(@Nullable Player winner) {
+        Stage primaryStage = (Stage) anchorPane.getScene().getWindow();
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        dialog.setResizable(false);
+        VBox dialogVbox = new VBox(20);
+
+        String gameEndMessage;
+        if (winner == null) gameEndMessage = "Draw!";
+        else gameEndMessage = "Player " + winner.getName() + " wins!";
+
+        Label message = new Label(gameEndMessage);
+        message.setAlignment(Pos.CENTER);
+        dialogVbox.getChildren().add(message);
+        dialog.setScene(new Scene(dialogVbox, 260, 40));
+        dialog.show();
+    }
+
+    @Override
+    public void printCurrentPlayer(@NotNull Player player) {
+        currentPlayerLabel.setText(player.getName());
+    }
+
+    @Override
+    public void displayBoard(@NotNull Board board, @NotNull Player currentPlayer) {
+        tilePane.getChildren().clear();
+        for (int i = 0; i < BOARD_SIZE; i++)
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                final Site site = board.getSite(i * BOARD_SIZE + j);
+                final Cell cell;
+                if (site != null) {
+                    final String color = site.equals(getCurrentSite(currentPlayer)) ? "black" : "white";
+                    cell = new Cell(color, this::onCellClick, i, j);
+                    cell.showDisk();
+
+                } else {
+                    cell = new Cell("grey", this::onCellClick, i, j);
+                    if (board.isCorrectMove(i * BOARD_SIZE + j))
+                        cell.showDisk();
+                }
+                tilePane.getChildren().addAll(cell);
+            }
+
+        blackScore.setText(String.valueOf(board.getScore(Site.PLAYER)));
+        whiteScore.setText(String.valueOf(board.getScore(Site.OPPONENT)));
+    }
+
+    @NotNull
+    @Override
+    public Player nextPlayer(@NotNull Player currentPlayer) {
+        return currentPlayer.equals(black) ? white : black;
+    }
+
+    @Override
+    public void beginGame(@NotNull Player black, @NotNull Player white) {}
+
+    @Override
+    public void representMove(int move, @NotNull Function0<Unit> onDecided) {
+        //todo
     }
 }
