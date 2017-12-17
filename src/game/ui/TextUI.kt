@@ -25,15 +25,15 @@ class TextUI(private val output: PrintWriter, private val black: Player, private
         else output.println("Player ${winner.name} wins!")
     }
 
-    override fun nextPlayer(currentPlayer: Player) : Player {
-        if (currentPlayer == black)
+    private fun Player.nextPlayer():Player {
+        if(this==black)
             return white
         return black
     }
 
     private fun Board.print(currentPlayer: Player) {
         val current = currentPlayer.getSymbol()
-        val next = nextPlayer(currentPlayer).getSymbol()
+        val next = currentPlayer.nextPlayer().getSymbol()
         output.println(textRepresentation(current, next))
     }
 

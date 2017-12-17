@@ -92,7 +92,10 @@ class MainWindowController:GameUI,PlayerUI {
 				val site=board.getSite(i*Board.BOARD_SIZE+j)
 				val cell=cells[i*Board.BOARD_SIZE+j]
 				if(site!=null) {
-					val color=if(site==getCurrentSite(currentPlayer)) "black" else "white"
+					val color=if((currentPlayer==black&&site==Board.Site.PLAYER)||(currentPlayer==white&&site==Board.Site.OPPONENT))
+						"black"
+					else
+						"white"
 					cell.setColor(color)
 				}
 				cell.setDiskVisible(site!=null)
@@ -100,10 +103,6 @@ class MainWindowController:GameUI,PlayerUI {
 
 		blackScore.text=board.getScore(Site.PLAYER).toString()
 		whiteScore.text=board.getScore(Site.OPPONENT).toString()
-	}
-
-	override fun nextPlayer(currentPlayer:Player):Player {
-		return if(currentPlayer==black) white else black
 	}
 
 	override fun beginGame(black:Player,white:Player) {
