@@ -142,5 +142,19 @@ internal class BoardTest {
 		assertEquals(expectedOpponent,actualOpponent)
 	}
 
+	@Test
+	fun testGetMoveValue() {
+		val board=boardFactory.getBoard(
+				listOf(2 to 1, 2 to 2, 2 to 3, 4 to 1, 4 to 2, 4 to 3, 5 to 3),
+				listOf(2 to 4, 3 to 3, 3 to 4, 4 to 4))
+
+		assertEquals(board.getMoveValue(1,2),1)
+		assertEquals(board.getMoveValue(1,3),1)
+		assertEquals(board.getMoveValue(2,0),3)
+		assertEquals(board.getMoveValue(4,0),3)
+		assertEquals(board.getMoveValue(5,2),1)
+		assertEquals(board.getMoveValue(6,2),1)
+		assertEquals(board.getMoveValue(6,3),2)
+	}
 
 }

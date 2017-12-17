@@ -191,4 +191,6 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 	}
 
+	fun getMoveValue(row: Int, column: Int): Int {return 1;}
+
 }
