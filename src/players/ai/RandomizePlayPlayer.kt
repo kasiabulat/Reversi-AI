@@ -1,6 +1,7 @@
 package players.ai
 
 import board.Board
+import javafx.concurrent.Task
 import players.Player
 import java.util.*
 
@@ -30,20 +31,29 @@ class RandomizePlayPlayer(override val name: String, private val random: Random)
 
 	override fun makeMove(board: Board, onMoveDecided: (Int) -> Unit) {
 
-		val decidedMove = (0..63).filter { board.isCorrectMove(it) }.parallelStream().map {
-			var result = 0
-			val currentBoard = board.makeMove(it)
-			repeat(NUMBER_OF_TRIES_PER_CELL)
-			{
-				result += evaluateBoard(currentBoard)
+		val task=object :Task<Int>()
+		{
+			override fun call():Int {
+					return (0..63).filter { board.isCorrectMove(it) }.parallelStream().map {
+						var result = 0
+						val currentBoard = board.makeMove(it)
+						repeat(NUMBER_OF_TRIES_PER_CELL)
+						{
+							result += evaluateBoard(currentBoard)
+						}
+						return@map it to result
+					}.min { A, B -> A.second.compareTo(B.second) }.map { it.first }.get()
 			}
-			return@map it to result
-		}.min { A, B -> A.second.compareTo(B.second) }.map { it.first }.get()
 
-		onMoveDecided(decidedMove)
+			override fun succeeded() {
+				onMoveDecided(value)
+			}
+		}
+
+		Thread(task).start()
 	}
 
 	companion object {
-		private const val NUMBER_OF_TRIES_PER_CELL = 1000
+		private const val NUMBER_OF_TRIES_PER_CELL = 10000
 	}
 }
