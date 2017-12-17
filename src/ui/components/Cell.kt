@@ -16,7 +16,7 @@ class Cell(private val rowId:Int,private val columnId:Int):AnchorPane(),Serializ
 	@FXML private lateinit var anchorPane:AnchorPane
 	@FXML private lateinit var diskButton:Button
 
-	private var onClick:Function0<Unit>?=null
+	private var onClick:(() -> Unit)?=null
 
 	val color:Color
 		get()=diskButton.background.fills[0].fill as Color
@@ -49,7 +49,7 @@ class Cell(private val rowId:Int,private val columnId:Int):AnchorPane(),Serializ
 		diskButton.style=styleString
 	}
 
-	fun setOnClick(onClick:Function0<Unit>) {
+	fun setOnClick(onClick:(()->Unit)?) {
 		this.onClick=onClick
 	}
 
@@ -59,7 +59,7 @@ class Cell(private val rowId:Int,private val columnId:Int):AnchorPane(),Serializ
 
 	@FXML
 	fun onCellClicked() {
-		onClick!!.invoke()
+		onClick?.invoke()
 	}
 
 	@FXML

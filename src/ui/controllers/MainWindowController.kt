@@ -69,11 +69,10 @@ class MainWindowController:GameUI,PlayerUI {
 		dialog.isResizable=false
 		val dialogVbox=VBox(20.0)
 
-		val gameEndMessage:String
-		if(winner==null)
-			gameEndMessage="Draw!"
+		val gameEndMessage=if(winner==null)
+			"Draw!"
 		else
-			gameEndMessage="Player "+winner.name+" wins!"
+			"Player "+winner.name+" wins!"
 
 		val message=Label(gameEndMessage)
 		message.alignment=Pos.CENTER
@@ -99,6 +98,7 @@ class MainWindowController:GameUI,PlayerUI {
 					cell.setColor(color)
 				}
 				cell.setDiskVisible(site!=null)
+				cell.setOnClick(null)
 			}
 
 		blackScore.text=board.getScore(Site.PLAYER).toString()
@@ -110,7 +110,7 @@ class MainWindowController:GameUI,PlayerUI {
 		this.white=white
 	}
 
-	override fun representMove(move:Int,onDecided:Function0<Unit>) {
+	override fun representMove(move:Int,onDecided:() -> Unit) {
 		val cell=cells[move]
 		cell.setColor("grey")
 		cell.setOnClick(onDecided)

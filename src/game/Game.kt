@@ -44,7 +44,7 @@ class Game(private val black:Player,private val white:Player,private val boardFa
 				throw GameException("Player: ${currentPlayer.name} made incorrect move: $move on ${currentBoard.textRepresentation()}")
 			}
 			currentBoard=currentBoard.makeMove(move)
-			ui.displayBoard(currentBoard,currentPlayer)
+			ui.displayBoard(currentBoard,currentPlayer.nextPlayer())
 			evaluate(currentBoard,currentPlayer.nextPlayer())
 		})
 	}
