@@ -161,7 +161,7 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 
 	companion object {
-		private const val BOARD_SIZE = 8
+		const val BOARD_SIZE = 8
 
 
 		val DIRECTIONS = listOf(
