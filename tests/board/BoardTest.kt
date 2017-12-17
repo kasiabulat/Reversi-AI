@@ -142,4 +142,5 @@ internal class BoardTest {
 		assertEquals(expectedOpponent,actualOpponent)
 	}
 
+
 }
