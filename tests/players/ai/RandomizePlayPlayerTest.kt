@@ -15,7 +15,7 @@ class RandomizePlayPlayerTest {
 
 	@Test
 	fun makeMove() {
-		val player = RandomizePlayPlayer("Randomised", Random())
+		val player = RandomizePlayPlayer("Randomised", Random(123),1)
 		player.makeMove(startingBoard, {
 			assertTrue(startingBoard.isCorrectMove(it))
 		})

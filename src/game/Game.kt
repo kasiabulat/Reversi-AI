@@ -45,6 +45,7 @@ class Game(private val black:Player,private val white:Player,private val boardFa
 			}
 			currentBoard=currentBoard.makeMove(move)
 			ui.displayBoard(currentBoard,currentPlayer.nextPlayer())
+			ui.markLatestPlayedMove(move)
 			evaluate(currentBoard,currentPlayer.nextPlayer())
 		})
 	}

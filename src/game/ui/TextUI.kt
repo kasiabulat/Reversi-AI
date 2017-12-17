@@ -5,6 +5,10 @@ import players.Player
 import java.io.PrintWriter
 
 class TextUI(private val output: PrintWriter, private val black: Player, private val white: Player) : GameUI {
+    override fun markLatestPlayedMove(move:Int) {
+
+    }
+
     override fun beginGame(black: Player, white: Player) {
         output.println("Game starts.")
         output.println("Black : ${black.name}.")

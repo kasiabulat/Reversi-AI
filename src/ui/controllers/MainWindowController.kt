@@ -1,7 +1,6 @@
 package ui.controllers
 
 import board.Board
-import board.Board.Site
 import game.Game
 import game.ui.GameUI
 import javafx.fxml.FXML
@@ -20,6 +19,8 @@ import ui.components.Cell
 import java.util.*
 
 class MainWindowController:GameUI,PlayerUI {
+
+
 	@FXML private lateinit var anchorPane:AnchorPane
 	@FXML private lateinit var tilePane:TilePane
 	@FXML private lateinit var whiteScore:Label
@@ -82,12 +83,16 @@ class MainWindowController:GameUI,PlayerUI {
 	}
 
 	override fun displayBoard(board:Board,currentPlayer:Player) {
+
+		val blackSite=if(currentPlayer==black) Board.Site.PLAYER else Board.Site.OPPONENT
+		val whiteSite=if(currentPlayer==white) Board.Site.PLAYER else Board.Site.OPPONENT
+
 		for(i in 0 until Board.BOARD_SIZE)
 			for(j in 0 until Board.BOARD_SIZE) {
 				val site=board.getSite(i*Board.BOARD_SIZE+j)
 				val cell=cells[i*Board.BOARD_SIZE+j]
 				if(site!=null) {
-					val color=if((currentPlayer==black&&site==Board.Site.PLAYER)||(currentPlayer==white&&site==Board.Site.OPPONENT))
+					val color=if(site==blackSite)
 						"black"
 					else
 						"white"
@@ -95,10 +100,18 @@ class MainWindowController:GameUI,PlayerUI {
 				}
 				cell.setDiskVisible(site!=null)
 				cell.setOnClick(null)
+				cell.setText("")
 			}
 
-		blackScore.text=board.getScore(Site.PLAYER).toString()
-		whiteScore.text=board.getScore(Site.OPPONENT).toString()
+
+
+		blackScore.text=board.getScore(blackSite).toString()
+		whiteScore.text=board.getScore(whiteSite).toString()
+	}
+
+	override fun markLatestPlayedMove(move:Int) {
+		val cell=cells[move]
+		cell.setText("I")
 	}
 
 	override fun beginGame(black:Player,white:Player) {

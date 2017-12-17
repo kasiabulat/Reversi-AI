@@ -1,7 +1,6 @@
 package program
 
 import board.BoardFactory
-import game.Game
 import players.ai.FirstAvailableMovePlayer
 import players.ai.RandomizePlayPlayer
 import java.io.PrintWriter
@@ -20,7 +19,7 @@ class Program {
 //		val black=FirstAvailableMovePlayer("Player 1")
 //		val white=FirstAvailableMovePlayer("Player 2")
 		val black = FirstAvailableMovePlayer("Player 1")
-		val white = RandomizePlayPlayer("Player 2", Random())
+		val white = RandomizePlayPlayer("Player 2", Random(123),100)
 		val boardFactory = BoardFactory()
 		//Game(black, white, boardFactory, output).playGame()
 	}

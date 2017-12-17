@@ -7,7 +7,7 @@ import java.util.*
 
 /**
  * Created by Kamil Rajtar on 15.12.17.  */
-class RandomizePlayPlayer(override val name: String, private val random: Random) : Player {
+class RandomizePlayPlayer(override val name: String, private val random: Random,private val numberOfTries: Int) : Player {
 	private fun evaluateBoard(board: Board): Int {
 		var boardCurrent = board
 		var resultMultiplier = 1;
@@ -37,7 +37,7 @@ class RandomizePlayPlayer(override val name: String, private val random: Random)
 					return (0..63).filter { board.isCorrectMove(it) }.parallelStream().map {
 						var result = 0
 						val currentBoard = board.makeMove(it)
-						repeat(NUMBER_OF_TRIES_PER_CELL)
+						repeat(numberOfTries)
 						{
 							result += evaluateBoard(currentBoard)
 						}
@@ -51,9 +51,5 @@ class RandomizePlayPlayer(override val name: String, private val random: Random)
 		}
 
 		Thread(task).start()
-	}
-
-	companion object {
-		private const val NUMBER_OF_TRIES_PER_CELL = 10000
 	}
 }
