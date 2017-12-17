@@ -4,22 +4,17 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.Button
 import javafx.scene.layout.AnchorPane
-import javafx.scene.paint.Color
-
 import java.io.IOException
 import java.io.Serializable
 
 /**
  * Created by Kasia on 05.12.2016.
  */
-class Cell(private val rowId:Int,private val columnId:Int):AnchorPane(),Serializable {
+class Cell:AnchorPane(),Serializable {
 	@FXML private lateinit var anchorPane:AnchorPane
 	@FXML private lateinit var diskButton:Button
 
 	private var onClick:(() -> Unit)?=null
-
-	val color:Color
-		get()=diskButton.background.fills[0].fill as Color
 
 	init {
 		val fxmlLoader=FXMLLoader(javaClass.getResource("cell.fxml"))

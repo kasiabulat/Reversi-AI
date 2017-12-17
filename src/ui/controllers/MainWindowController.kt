@@ -34,15 +34,11 @@ class MainWindowController:GameUI,PlayerUI {
 		this.game=game
 	}
 
-	private fun getCurrentSite(currentPlayer:Player):Site {
-		return if(currentPlayer==black) Site.PLAYER else Site.OPPONENT
-	}
-
 	private fun initialiseCells() {
 		cells.clear()
 		for(i in 0 until Board.BOARD_SIZE)
 			for(j in 0 until Board.BOARD_SIZE) {
-				val cell=Cell(i,j)
+				val cell=Cell()
 				cell.setDiskVisible(false)
 				cells.add(cell)
 				tilePane.children.addAll(cell)
@@ -67,7 +63,7 @@ class MainWindowController:GameUI,PlayerUI {
 		dialog.initModality(Modality.APPLICATION_MODAL)
 		dialog.initOwner(primaryStage)
 		dialog.isResizable=false
-		val dialogVbox=VBox(20.0)
+		val dialogVBox=VBox(20.0)
 
 		val gameEndMessage=if(winner==null)
 			"Draw!"
@@ -76,8 +72,8 @@ class MainWindowController:GameUI,PlayerUI {
 
 		val message=Label(gameEndMessage)
 		message.alignment=Pos.CENTER
-		dialogVbox.children.add(message)
-		dialog.scene=Scene(dialogVbox,260.0,40.0)
+		dialogVBox.children.add(message)
+		dialog.scene=Scene(dialogVBox,260.0,40.0)
 		dialog.show()
 	}
 
