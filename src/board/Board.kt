@@ -191,13 +191,11 @@ data class Board(private val playerPieces: Long, private val opponentPieces: Lon
 
 	}
 
-	fun getMoveValue(row: Int, column: Int): Int {
-		if(!isCorrectMove(row* BOARD_SIZE + column)) return -1
+	fun getMoveValue(move: Int): Int {
+		if(!isCorrectMove(move)) return -1
 		val currentBoard = this
-		val boardAfterMove = currentBoard.makeMove(row * BOARD_SIZE + column)
-		val playerDelta = boardAfterMove.getScore(Site.PLAYER) - currentBoard.getScore(Site.OPPONENT) - 1
-		val opponentDelta = boardAfterMove.getScore(Site.OPPONENT) - currentBoard.getScore(Site.PLAYER) - 1
-		return if(playerDelta < 0) opponentDelta else playerDelta
+		val boardAfterMove = currentBoard.makeMove(move)
+		return boardAfterMove.getScore(Site.OPPONENT) - currentBoard.getScore(Site.PLAYER) - 1
 	}
 
 }

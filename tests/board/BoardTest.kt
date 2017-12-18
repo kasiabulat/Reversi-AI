@@ -148,13 +148,13 @@ internal class BoardTest {
 				listOf(2 to 4, 3 to 3, 3 to 4, 4 to 4),
 				listOf(2 to 1, 2 to 2, 2 to 3, 4 to 1, 4 to 2, 4 to 3, 5 to 3))
 
-		assertEquals(1,board.getMoveValue(1,2))
-		assertEquals(1,board.getMoveValue(1,3))
-		assertEquals(3,board.getMoveValue(2,0))
-		assertEquals(3,board.getMoveValue(4,0))
-		assertEquals(1,board.getMoveValue(5,2))
-		assertEquals(1,board.getMoveValue(6,2))
-		assertEquals(2,board.getMoveValue(6,3))
+		assertEquals(1,board.getMoveValue(1*Board.BOARD_SIZE + 2))
+		assertEquals(1,board.getMoveValue(1*Board.BOARD_SIZE + 3))
+		assertEquals(3,board.getMoveValue(2*Board.BOARD_SIZE + 0))
+		assertEquals(3,board.getMoveValue(4*Board.BOARD_SIZE + 0))
+		assertEquals(1,board.getMoveValue(5*Board.BOARD_SIZE + 2))
+		assertEquals(1,board.getMoveValue(6*Board.BOARD_SIZE + 2))
+		assertEquals(2,board.getMoveValue(6*Board.BOARD_SIZE + 3))
 	}
 
 }
