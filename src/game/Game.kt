@@ -2,59 +2,58 @@ package game
 
 import board.Board
 import board.BoardFactory
-import game.ui.GameUI
-import players.Player
+import players.AsynchronousPlayer
 
 /**
  * Created by Kamil Rajtar on 10.12.17.
  */
-class Game(private val black:Player,private val white:Player,private val boardFactory:BoardFactory,private val ui:GameUI) {
+class Game(private val black:AsynchronousPlayer,private val white:AsynchronousPlayer,private val boardFactory:BoardFactory,private val ui:GameUI) {
 
-	private fun endGame(board:Board,currentPlayer:Player) {
+	private fun endGame(board:Board,currentAsynchronousPlayer:AsynchronousPlayer) {
 		val winner=when(board.getDominatingSite()) {
-			Board.Site.PLAYER->currentPlayer
-			Board.Site.OPPONENT->currentPlayer.nextPlayer()
+			Board.Site.PLAYER->currentAsynchronousPlayer
+			Board.Site.OPPONENT->currentAsynchronousPlayer.nextPlayer()
 			null->null
 		}
 		ui.endGame(winner)
 	}
 
-	private fun Player.nextPlayer():Player {
+	private fun AsynchronousPlayer.nextPlayer():AsynchronousPlayer {
 		if(this==black)
 			return white
 		return black
 	}
 
-	private fun evaluate(board:Board,player:Player) {
+	private fun evaluate(board:Board,player:AsynchronousPlayer) {
 		if(board.isGameEnded()) {
 			endGame(board,player)
 			return
 		}
 		var currentBoard=board
-		var currentPlayer=player
+		var currentAsynchronousPlayer=player
 		if(!currentBoard.canPlayerPutPiece()) {
 			currentBoard=currentBoard.passTurn()
-			currentPlayer=currentPlayer.nextPlayer()
+			currentAsynchronousPlayer=currentAsynchronousPlayer.nextPlayer()
 		}
 
-		ui.printCurrentPlayer(currentPlayer)
+		ui.printCurrentPlayer(currentAsynchronousPlayer)
 
-		currentPlayer.makeMove(currentBoard,{move->
+		currentAsynchronousPlayer.makeMove(currentBoard,{move->
 			if(!currentBoard.isCorrectMove(move)) {
-				throw GameException("Player: ${currentPlayer.name} made incorrect move: $move on ${currentBoard.textRepresentation()}")
+				throw GameException("AsynchronousPlayer: ${currentAsynchronousPlayer.name} made incorrect move: $move on ${currentBoard.textRepresentation()}")
 			}
 			currentBoard=currentBoard.makeMove(move)
-			ui.displayBoard(currentBoard,currentPlayer.nextPlayer())
+			ui.displayBoard(currentBoard,currentAsynchronousPlayer.nextPlayer())
 			ui.markLatestPlayedMove(move)
-			evaluate(currentBoard,currentPlayer.nextPlayer())
+			evaluate(currentBoard,currentAsynchronousPlayer.nextPlayer())
 		})
 	}
 
 	fun playGame() {
 		val board=boardFactory.getStartingBoard()
 		ui.beginGame(black,white)
-		val currentPlayer=black
-		ui.displayBoard(board,currentPlayer)
-		evaluate(board,currentPlayer)
+		val currentAsynchronousPlayer=black
+		ui.displayBoard(board,currentAsynchronousPlayer)
+		evaluate(board,currentAsynchronousPlayer)
 	}
 }

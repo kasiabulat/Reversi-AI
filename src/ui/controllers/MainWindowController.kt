@@ -2,7 +2,7 @@ package ui.controllers
 
 import board.Board
 import game.Game
-import game.ui.GameUI
+import game.GameUI
 import javafx.fxml.FXML
 import javafx.geometry.Insets
 import javafx.geometry.Pos

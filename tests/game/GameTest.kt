@@ -2,10 +2,10 @@ package game
 
 import board.Board
 import board.BoardFactory
-import game.ui.GameUI
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import players.AsynchronousPlayerWrapper
 import players.Player
 import players.ai.FirstAvailableMovePlayer
 
@@ -44,6 +44,8 @@ internal class GameTest {
 			override fun endGame(winner:Player?) {
 			}
 		}
-		Game(black,white,boardFactory,ui).playGame()
+		val blackAsynchronous=AsynchronousPlayerWrapper(black)
+		val whiteAsynchronous=AsynchronousPlayerWrapper(white)
+		Game(blackAsynchronous,whiteAsynchronous,boardFactory,ui).playGame()
 	}
 }

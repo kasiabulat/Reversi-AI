@@ -27,7 +27,8 @@ internal class HumanTextPlayerTest {
 		val player = HumanTextPlayer("TESTED", scanner, printWriter)
 
 		val expected = Board.getCellNumber(2, 3)
-		player.makeMove(startingBoard, { actual -> assertEquals(expected, actual) })
+		val actual=player.makeMove(startingBoard)
+		assertEquals(expected,actual)
 
 
 	}

@@ -1,10 +1,11 @@
-package game.ui
+package program
 
 import board.Board
+import game.GameUI
 import players.Player
 import java.io.PrintWriter
 
-class TextUI(private val output: PrintWriter, private val black: Player, private val white: Player) : GameUI {
+class TextUI(private val output: PrintWriter, private val black: Player, private val white: Player) :GameUI {
     override fun markLatestPlayedMove(move:Int) {
 
     }

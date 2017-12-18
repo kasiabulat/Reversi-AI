@@ -1,10 +1,10 @@
-package game.ui
+package game
 
 import board.Board
 import players.Player
 
 interface GameUI {
-    fun endGame(winner : Player?)
+    fun endGame(winner :Player?)
     fun printCurrentPlayer(player: Player)
     fun displayBoard(board: Board, currentPlayer: Player)
     fun markLatestPlayedMove(move:Int)

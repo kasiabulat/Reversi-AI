@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Created by Kamil Rajtar on 08.12.17.
  */
-class HumanTextPlayer(override val name: String, private val input: Scanner, private val output: PrintWriter) : Player {
+class HumanTextPlayer(override val name: String, private val input: Scanner, private val output: PrintWriter) : SynchronousPlayer {
 
 	private fun readCoordinate(name: String): Int {
 		output.print(name)
@@ -18,22 +18,22 @@ class HumanTextPlayer(override val name: String, private val input: Scanner, pri
 		return userNumber - 1
 	}
 
-	override fun makeMove(board: Board, onMoveDecided: (Int) -> Unit) {
+	override fun makeMove(board: Board):Int {
 		try {
 			val row = readCoordinate("Row: ")
 			val column = readCoordinate("Column: ")
 			val cell = Board.getCellNumber(row, column)
 			if (!board.isCorrectMove(cell)) {
 				output.println("ERROR! Cannot make this move")
-				makeMove(board, onMoveDecided)
-				return
+				return makeMove(board)
+
 			}
-			onMoveDecided(cell)
-			return
+			return cell
+
 		} catch (e: NumberFormatException) {
 			output.println("ERROR! Bad number format")
-			makeMove(board, onMoveDecided)
-			return
+			return makeMove(board)
+
 		}
 	}
 }
