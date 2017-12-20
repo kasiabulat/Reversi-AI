@@ -3,7 +3,7 @@ package board
 /**
  * Created by Kamil Rajtar on 07.12.17.
  */
-data class Board(private val playerPieces:Long,private val opponentPieces:Long) {
+data class Board(val playerPieces:Long,val opponentPieces:Long) {
 
 	init {
 		if(!isCorrectBoard())
