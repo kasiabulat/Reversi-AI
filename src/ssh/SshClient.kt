@@ -26,19 +26,25 @@ class SshClient(host:String,
 	}
 
 	override fun executeCommand(command:String):String {
-
 		val channel=session.openChannel(CHANNEL_TYPE_EXEC) as ChannelExec
 		channel.setCommand(command)
 
 		channel.connect()
 
 		val scanner=Scanner(channel.inputStream)
+		val scannerError=Scanner(channel.errStream)
 		val result=StringBuilder()
 		while(scanner.hasNextLine())
 			result.appendln(scanner.nextLine())
+		while(scannerError.hasNextLine())
+			System.err.println(scannerError.nextLine())
+
 
 		channel.disconnect()
-		return result.toString()
+
+		val resultText=result.toString()
+
+		return resultText
 	}
 
 	override fun close() {

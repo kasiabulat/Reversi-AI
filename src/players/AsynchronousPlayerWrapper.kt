@@ -12,12 +12,23 @@ class AsynchronousPlayerWrapper(val base:SynchronousPlayer):AsynchronousPlayer {
 
 	override fun makeMove(board:Board,onMoveDecided:(Int)->Unit) {
 		val task=object:Task<Int>() {
+			var exception:Exception?=null
+
 			override fun call():Int {
-				return base.makeMove(board)
+				try {
+					return base.makeMove(board)
+				} catch(e:Exception) {
+					exception=e;
+					throw e
+				}
 			}
 
 			override fun succeeded() {
 				onMoveDecided(value)
+			}
+
+			override fun failed() {
+				throw RuntimeException("Execution failed",exception)
 			}
 		}
 
