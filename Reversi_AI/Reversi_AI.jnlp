@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Reversi_AI.jnlp">
+  <information>
+    <title>Reversi AI</title>
+    <vendor>Unknown</vendor>
+    <description>Reversi AI</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Reversi_AI.jar" size="72943" download="eager" />
+    <jar href="jsch-0.1.54.jar" size="278612" download="eager" />
+    <jar href="kotlin-reflect.jar" size="2540183" download="eager" />
+    <jar href="kotlin-stdlib-jdk7.jar" size="3116" download="eager" />
+    <jar href="kotlin-stdlib-jdk8.jar" size="12322" download="eager" />
+    <jar href="kotlin-stdlib.jar" size="932988" download="eager" />
+    <jar href="kotlin-test.jar" size="28673" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="ui.windows.Launcher"  name="Reversi AI" />
+  <update check="background"/>
+</jnlp>

@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Reversi AI">
+    <output-path>$PROJECT_DIR$/out/artifacts/Reversi_AI</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="ui.windows.Launcher" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="Reversi_AI.jar">
+        <element id="module-output" name="Reversi AI" />
+      </element>
+      <element id="library" level="project" name="KotlinJavaRuntime" />
+      <element id="library" level="project" name="jsch-0.1.54" />
+    </root>
+  </artifact>
+</component>
