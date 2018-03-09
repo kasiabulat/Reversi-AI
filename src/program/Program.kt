@@ -1,6 +1,8 @@
 package program
 
 import board.BoardFactory
+import game.Game
+import players.AsynchronousPlayerWrapper
 import players.ai.FirstAvailableMovePlayer
 import players.ai.RandomizePlayPlayer
 import java.io.PrintWriter
@@ -12,16 +14,12 @@ import java.util.*
 class Program {
 
 	fun run() {
-		val output = PrintWriter(System.out, true)
-//		val input = Scanner(System.`in`)
-//		val black= HumanTextPlayer("Player 1",input,output)
-//		val white= HumanTextPlayer("Player 2",input,output)
-//		val black=FirstAvailableMovePlayer("Player 1")
-//		val white=FirstAvailableMovePlayer("Player 2")
-		val black = FirstAvailableMovePlayer("Player 1")
-		val white = RandomizePlayPlayer("Player 2", Random(123),100)
+		val black = AsynchronousPlayerWrapper( FirstAvailableMovePlayer("Player 1"))
+		val white = AsynchronousPlayerWrapper( RandomizePlayPlayer("Player 2", Random(123),100))
 		val boardFactory = BoardFactory()
-		//Game(black, white, boardFactory, output).playGame()
+		val output = PrintWriter(System.out, true)
+		val textUi=TextUI(output,black,white)
+		Game(black, white, boardFactory, textUi).playGame()
 	}
 
 
